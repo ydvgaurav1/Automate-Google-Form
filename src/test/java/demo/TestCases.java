@@ -1,9 +1,11 @@
 package demo;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,16 +23,6 @@ public class TestCases {
     ChromeDriver driver;
     Wrappers wrapper;
 
-    /*
-     * TODO: Write your tests here with testng @Test annotation.
-     * Follow `testCase01` `testCase02`... format or what is provided in
-     * instructions
-     */
-
-    /*
-     * Do not change the provided methods unless necessary, they will help in
-     * automation and assessment
-     */
     @BeforeTest
     public void startBrowser() {
         System.setProperty("java.util.logging.config.file", "logging.properties");
@@ -62,6 +54,7 @@ public class TestCases {
         // Navigating to the Google Form URL
         wrapper.navigateToUrl(
                 "https://docs.google.com/forms/d/e/1FAIpQLSep9LTMntH5YqIXa5nkiPKSs283kdwitBBhXWyZdAS-e4CxBQ/viewform");
+        Thread.sleep(3000);
 
         wrapper.fillTextField(By.xpath("(//input[@type='text'])[1]"), "Crio Learner");
 
@@ -70,17 +63,17 @@ public class TestCases {
         wrapper.fillTextField(By.xpath("//textarea[@class='KHxj8b tL9Q4c']"),
                 "I want to be the best QA Engineer!" + epochTime);
 
-        wrapper.clickElement(By.xpath("(//div[@class=\"Od2TWd hYsg7c\"])[3]"));
+        wrapper.selectRadioButtonByLabel("6 - 10");
 
-        // Using WebDriverWait to ensure elements are clickable before interacting
-        System.out.println("Using WebDriverWait to ensure the elements are clickable before interacting with them");
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@data-answer-value=\"Java\"]"))).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@data-answer-value=\"Selenium\"]"))).click();
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@data-answer-value=\"TestNG\"]"))).click();
+        // Selecting check boxes
+        System.out.println("Selecting check boxes");
+        wrapper.selectCheckboxesByLabels(List.of("Java", "Selenium", "TestNG"));
 
-        wrapper.clickElement(By.xpath("//span[text()=\"Choose\"]"));
-        Thread.sleep(5000);
-        wrapper.clickElement(By.xpath("(//span[@class='vRMGwf oJeWuf'][text()='Mr'])[2]"));
+        WebElement dropdown = wait
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Choose']")));
+        dropdown.click();
+        Thread.sleep(3000);
+        wrapper.selectDropdownOptionByLabel("Mr");
 
         String dateMinus7Days = wrapper.getDateMinusDays(7);
         wrapper.fillTextField(By.xpath("//input[contains(@type,'date')]"), dateMinus7Days);
@@ -93,7 +86,9 @@ public class TestCases {
         Thread.sleep(5000);
 
         // Using WebDriverWait to ensure elements are clickable before interacting
-        String successMsg = wrapper.printText(By.xpath("//div[@class='vHW8K']"));
+        WebElement successMessageElement = wait
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='vHW8K']")));
+        String successMsg = successMessageElement.getText();
         System.out.println(successMsg);
         // Ending the test case
         System.out.println("End TestCase 01");
