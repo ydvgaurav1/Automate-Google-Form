@@ -56,7 +56,9 @@ public class TestCases {
                 "https://docs.google.com/forms/d/e/1FAIpQLSep9LTMntH5YqIXa5nkiPKSs283kdwitBBhXWyZdAS-e4CxBQ/viewform");
         Thread.sleep(3000);
 
-        wrapper.fillTextField(By.xpath("//div[@class='rFrNMe k3kHxc RdH0ib yqQS1 zKHdkd']//input[@type='text' and @class='whsOnd zHQkBf']"), "Crio Learner");
+        wrapper.fillTextField(By.xpath(
+                "//div[@class='rFrNMe k3kHxc RdH0ib yqQS1 zKHdkd']//input[@type='text' and @class='whsOnd zHQkBf']"),
+                "Crio Learner");
 
         // Generating unique text for the TextArea field
         long epochTime = System.currentTimeMillis();
@@ -72,7 +74,7 @@ public class TestCases {
         WebElement dropdown = wait
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Choose']")));
         dropdown.click();
-        Thread.sleep(3000);
+        Thread.sleep(5000);
         wrapper.selectDropdownOptionByLabel("Mr");
 
         String dateMinus7Days = wrapper.getDateMinusDays(7);
