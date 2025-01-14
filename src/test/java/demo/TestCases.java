@@ -56,7 +56,7 @@ public class TestCases {
                 "https://docs.google.com/forms/d/e/1FAIpQLSep9LTMntH5YqIXa5nkiPKSs283kdwitBBhXWyZdAS-e4CxBQ/viewform");
         Thread.sleep(3000);
 
-        wrapper.fillTextField(By.xpath("(//input[@type='text'])[1]"), "Crio Learner");
+        wrapper.fillTextField(By.xpath("(//div[@class='rFrNMe k3kHxc RdH0ib yqQS1 zKHdkd']//input[@type='text' and @class='whsOnd zHQkBf']"), "Crio Learner");
 
         // Generating unique text for the TextArea field
         long epochTime = System.currentTimeMillis();
